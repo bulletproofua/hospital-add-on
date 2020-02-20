@@ -11,13 +11,13 @@ import { environment } from '../environments/environment';
 
 // Modules
 import { MaterialModule } from './modules/material.module';
+import { DataModule } from './store/data/data.module';
 
 // Store
 import { reducers, metaReducers } from './store/reducers';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       maxAge: 25,
       logOnly: environment.production,
     }),
+    DataModule
   ],
   providers: [],
   bootstrap: [AppComponent]
