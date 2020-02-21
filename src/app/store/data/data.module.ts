@@ -8,6 +8,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { DataEffects } from './effects/data.effects';
 import { reducers } from '../reducers';
 
+// Services
+import { DataService } from './services/data.service';
+
 @NgModule({
   declarations: [],
   imports: [
@@ -15,7 +18,8 @@ import { reducers } from '../reducers';
     HttpClientModule,
     StoreModule.forFeature('data', reducers),
     EffectsModule.forFeature([DataEffects]),
-  ]
+  ],
+  providers: [DataService]
 })
 
 export class DataModule { }

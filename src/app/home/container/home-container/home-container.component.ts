@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import * as dataStore from "../../../store/data/reducers"
 
 @Component({
   selector: 'app-home-container',
@@ -7,32 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeContainerComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<any>) { }
 
   ngOnInit(): void {
   }
 
-}
+  applyFilter(event) {
 
-// DATA interface
-// {
-//   "group": [
-//       {
-//           "id": "1",
-//           "title": "ДІАГНОЗИ",
-//           "subgroup": [
-//               {
-//                   "id": "1.1",
-//                   "title": "АРТЕРІЇ",
-//                   "elements": [
-//                       {
-//                           "id": "",
-//                           "title": "",
-//                           "value": ""
-//                       }
-//                   ]
-//               }
-//           ]
-//       }
-//   ]
-// }
+  }
+
+}

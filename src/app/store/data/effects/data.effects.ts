@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, switchMap, catchError } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
+import { of, Observable } from 'rxjs';
+import { map, switchMap, catchError } from 'rxjs/operators';
+
+import { Action } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as dataActions from "../actions/data.action";
 
 import { DataService } from '../services/data.service';
-import { of, Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
  
 @Injectable()
 export class DataEffects {
@@ -15,8 +17,14 @@ export class DataEffects {
     ofType(dataActions.getData),
     switchMap(() => this.datraService.getDataFromFile()
       .pipe(
-        map((storeData: any) => dataActions.getDataSuccess({ data: storeData })),
-        catchError((error) => of(dataActions.getDataFailure(error)))
+        map((storeData: any) => {
+            console.log("storeData req", storeData)
+            return dataActions.getDataSuccess({ data: storeData })
+        }),
+        catchError((error: HttpErrorResponse) => {
+            console.log("err", error)
+            return of(dataActions.getDataFailure(error))
+        })
       )
     ))
   );

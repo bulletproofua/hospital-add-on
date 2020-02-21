@@ -1,1 +1,22 @@
-<p>home-container works!</p>
+<div>
+    <mat-card>
+        <mat-card-title>Title</mat-card-title>
+        <mat-card-content>
+            <mat-form-field>
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="">
+            </mat-form-field>
+        
+            <app-list></app-list>
+        </mat-card-content>
+    </mat-card>
+
+
+</div>
+
+
+
+<ng-template #error>
+
+</ng-template>
+

@@ -10,12 +10,16 @@ import { reducers } from '../store/reducers';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
+// Modules
+import { MaterialModule } from '../modules/material.module';
+
 
 @NgModule({
   declarations: [ListComponent, HomeContainerComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
+    MaterialModule,
     StoreModule.forFeature('home', reducers),
     EffectsModule.forFeature([]),
   ]
