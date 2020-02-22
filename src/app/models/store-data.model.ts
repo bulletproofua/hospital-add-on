@@ -20,12 +20,6 @@ export interface SubGroupElement {
     value: string;
 } 
 
-export interface GetDataError {
-    title: string;
-    code: string;
-    description: string;
-}
-
 export interface SelectionGroup {
     id: string;
     title: string;

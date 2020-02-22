@@ -1,17 +1,16 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as homeAction from '../actions/home.action';
 
-import { Group, GetDataError } from '../../../models/store-data.model';
+import { Group, SelectionGroup } from '../../../models/store-data.model';
 
 export const HOME_FEATURE_KEY = "home";
 
 export interface HomeState {
     data: Group[],
     groups: any[];
-    error: GetDataError;
+    error: any;
     filter: string;
-    selectedGroups: any[];
-    tableDisplayedColumns: string[]
+    selectedGroups: SelectionGroup[];
 }
 
 export const initialState: HomeState = {
@@ -19,8 +18,7 @@ export const initialState: HomeState = {
     groups: [],
     error: null,
     filter: '',
-    selectedGroups: [],
-    tableDisplayedColumns: ['id', 'title']
+    selectedGroups: []
 };
 
 const dataReducer = createReducer(
@@ -52,4 +50,3 @@ export const getGroups = (state) => state.groups;
 export const getError = (state) => state.error;
 export const getFilter = (state) => state.filter;
 export const getSelectedGroups = (state) => state.selectedGroups;
-export const getTableDisplayedColumns = (state) => state.tableDisplayedColumns;

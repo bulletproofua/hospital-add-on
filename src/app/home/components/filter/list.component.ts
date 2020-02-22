@@ -7,13 +7,13 @@ import * as fromHomeActions from "../../store/actions/home.action";
   selector: 'app-filter',
   template: `
     <mat-form-field class="w100">
-      <mat-label>Filter</mat-label>
-      <input #filter matInput autocomplete="off" (keyup)="applyFilter($event)">
+      <mat-label>Фільтр по колонці Title</mat-label>
+      <input #filter matInput autocomplete="off" (keyup)="applyFilter($event.target.value)">
       <button 
         *ngIf="filter.value !== ''" 
         mat-icon-button 
         matSuffix
-        (click)="filter.value = ''"
+        (click)="filter.value = ''; applyFilter('')"
        >
         <mat-icon>close</mat-icon>
       </button>
@@ -25,8 +25,8 @@ export class FilterComponent {
 
   constructor(private store: Store<any>) { }
 
-  applyFilter(event) {
-    this.store.dispatch(fromHomeActions.setTextFilter(event));
+  applyFilter(text) {
+    this.store.dispatch(fromHomeActions.setTextFilter({ text: text }));
   }
 
 }

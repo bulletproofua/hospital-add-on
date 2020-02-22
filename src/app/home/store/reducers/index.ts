@@ -3,7 +3,7 @@ import { createSelector } from "@ngrx/store";
 import * as fromHome from "./home.reducer";
 
 // Models
-import { SubGroupElement, Group, SelectionGroup } from '../../../models/store-data.model';
+import { Group } from '../../../models/store-data.model';
 import { HOME_FEATURE_KEY } from './home.reducer';
 
 import { State } from 'src/app/store/reducers';
@@ -34,11 +34,6 @@ export const getGroups = createSelector(
     data => fromHome.getGroups(data)
 )
 
-export const getTableDisplayedColumns = createSelector(
-    getHomeState,
-    data => fromHome.getTableDisplayedColumns(data)
-)
-
 export const getFilter = createSelector(
     getHomeState,
     data => fromHome.getFilter(data)
@@ -54,38 +49,57 @@ export const getSelectedGroups = createSelector(
     data => data.filter(d => d.selected)
 )
 
-export const getDataSortedByGroups = createSelector(
+export const getDataFilteredByGroups = createSelector(
     getData,
     getSelectedGroups,
     (data, getSelectedGroups: any) => data.filter((group: Group) => getSelectedGroups.some(selectedGroup => selectedGroup.id === group.id))
 )
 
+export const getDataFilteredByTextField = createSelector(
+    getDataFilteredByGroups,
+    getFilter,
+    (data, filterStr: string) => {
+        if (filterStr && data) {
+            return JSON.parse(JSON.stringify(data)).map(group => {
+                group.subGroup = group.subGroup.map(subgroup => ({
+                    ...subgroup,
+                    elements: subgroup.elements.filter(v => v.title.trim().toLowerCase().indexOf(filterStr) !== -1)
+                })).filter(sg => sg.elements.length)
+                return group
+            }).filter(g => g.subGroup.length)
+        }
+        return data;
+    }
+)
 
 export const getDataForTable = createSelector(
-    getDataSortedByGroups,
+    getDataFilteredByTextField,
     (data): Group[] => {
-        console.log("!! data", data)
-
         if (data) {
-            const arr = data.map(group => {
-                return group.subGroup.map(subgroup => {
-                    return subgroup.elements.map(el => ({
-                        ...el,
-                        subGroupId: subgroup.id,
-                        subGroupTitle: subgroup.title,
-                        groupId: group.id,
-                        groupTitle: group.title
-                    }))
+            const tableArr = [];
+            
+            data.forEach(group => {
+                tableArr.push({
+                    groupTitle: group.title,
+                    isGroup: true
                 })
-            }).flat(2);
+                
+                group.subGroup.forEach(subgroup => {
+                    tableArr.push({
+                        subgroupTitle: subgroup.title,
+                        isSubgroup: true
+                    })
 
-            return arr;
+                    subgroup.elements.forEach(el => {
+                        tableArr.push(el)
+                    })
+                })
+            })
+        
+            return tableArr;
         }
 
         return [];
     }
 )
-
-
-// .trim().toLowerCase()
 

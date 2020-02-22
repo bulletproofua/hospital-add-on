@@ -17,7 +17,11 @@ import * as fromHomeActions from "../../store/actions/home.action";
       > {{ group.title}} </mat-chip>
     </mat-chip-list>
   `,
-  styles: [``]
+  styles: [`
+    mat-chip {
+      cursor: pointer;
+    }
+  `]
 })
 export class GroupFilterComponent {
 

@@ -9,16 +9,31 @@
         display: flex;
         flex-direction: column;
     
-        .header {
-            flex: 1;
-        }
-    
         .content {
-            flex: auto;
+            flex: 1;
             position: relative;
             overflow: auto;
         }
     }
-
 }
 
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+
+    height: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+
+    strong {
+        font-size: 20px;
+        color: #3f51b5;
+    }
+
+    div {
+        margin-bottom: 14px;
+    }
+
+}

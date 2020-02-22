@@ -10,7 +10,7 @@ import * as dataActions from "../actions/home.action";
 
 import { DataService } from '../../../services/data.service';
 
-import { Group, StoreData } from 'src/app/models/store-data.model';
+import { StoreData } from 'src/app/models/store-data.model';
  
 @Injectable()
 export class HomeEffects {
@@ -20,12 +20,10 @@ export class HomeEffects {
     switchMap(() => this.dataService.getDataFromFile()
       .pipe(
         map((storeData: StoreData) => {
-            console.log("storeData req", storeData)
             return dataActions.getDataSuccess({ groups: storeData.group })
         }),
         catchError((error: HttpErrorResponse) => {
-            console.log("err", error)
-            return of(dataActions.getDataFailure(error))
+            return of(dataActions.getDataFailure({ error: error }))
         })
       )
     ))

@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 // Model
-import { Group, GetDataError } from '../../../models/store-data.model';
+import { Group } from '../../../models/store-data.model';
 
 export const getData = createAction(
     "[Home Api] Get Data "
@@ -14,7 +14,7 @@ export const getDataSuccess = createAction(
 
 export const getDataFailure = createAction(
     "[Home Api] Get Data Failure",
-    props<{ error: GetDataError }>()
+    props<{ error: any }>()
 );
 
 export const toggleGroup = createAction(

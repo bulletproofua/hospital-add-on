@@ -14,15 +14,21 @@ import * as fromHome from "../../store/reducers"
 export class ListComponent {
 
   tableData$ = this.store.select(fromHome.getDataForTable);
-  tableDisplayedColumns$ = this.store.select(fromHome.getTableDisplayedColumns);
-
-  dataSource = []
+  displayedColumns: string[] = ['id', 'title'];
 
   constructor(
     private store: Store<any>,
     private clipboard: Clipboard,
     private _snackBar: MatSnackBar
   ) { }
+
+  isGroup(index, item): boolean{
+    return item.isGroup;
+  }
+
+  isSubgroup(index, item): boolean{
+    return item.isSubgroup;
+  } 
 
   copyContent(text){
     this.clipboard.copy(text);

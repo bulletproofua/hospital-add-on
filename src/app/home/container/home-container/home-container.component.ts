@@ -11,6 +11,10 @@ import * as fromHomeActions from "../../store/actions/home.action";
 })
 export class HomeContainerComponent {
 
+  
+  data$ = this.store.select(fromHome.getData);
+  error$ = this.store.select(fromHome.getError);
+  
   constructor(private store: Store<any>) {
     this.store.dispatch(fromHomeActions.getData());
   }
