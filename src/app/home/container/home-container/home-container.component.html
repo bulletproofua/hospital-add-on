@@ -1,20 +1,17 @@
-<div>
-    <mat-card>
-        <mat-card-title>Title</mat-card-title>
-        <mat-card-content>
-            <mat-form-field>
-                <mat-label>Filter</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="">
-            </mat-form-field>
-        
-            <app-list></app-list>
-        </mat-card-content>
+<div class="container">
+    <mat-card class="card">
+        <div class="header">
+            <mat-card-title>Title</mat-card-title>
+            <mat-card-content>
+                <app-group-filter></app-group-filter>
+                <app-filter></app-filter>
+            </mat-card-content>
+        </div>
+        <div class="content">
+            <app-list class="table-wrapper"></app-list>
+        </div>
     </mat-card>
-
-
 </div>
-
-
 
 <ng-template #error>
 

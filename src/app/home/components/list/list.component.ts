@@ -1,24 +1,81 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, Inject } from '@angular/core';
+import { Clipboard } from "@angular/cdk/clipboard"
 
-import * as dataStore from "../../../store/data/reducers"
+import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+
+import { Store } from '@ngrx/store';
+import * as fromHome from "../../store/reducers"
 
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class ListComponent {
 
-  tableData$ = this.store.select(dataStore.getDataForTable);
-
-  displayedColumns: string[] = ['id', 'title', 'value'];
+  tableData$ = this.store.select(fromHome.getDataForTable);
+  tableDisplayedColumns$ = this.store.select(fromHome.getTableDisplayedColumns);
 
   dataSource = []
 
-  constructor(private store: Store<any>) { }
+  constructor(
+    private store: Store<any>,
+    private clipboard: Clipboard,
+    private _snackBar: MatSnackBar
+  ) { }
 
-  ngOnInit(): void {
+  copyContent(text){
+    this.clipboard.copy(text);
+    this.openSnackBar(text);
   }
 
+  openSnackBar(message: string,) {
+    this._snackBar.openFromComponent(CopySnackBarComponent, {
+      duration: 1500,
+      data: {
+        message: message
+      }
+    });
+  }
+
+}
+
+@Component({
+  selector: 'snack-bar',
+  template: `
+    <div class="snack-bar-wr">
+      <span class="snack-text">{{ data.message }}</span>
+      <span class="snack-bar-btn" (click)="onClick()">Закрити</span>
+    </div>
+  `,
+  styles: [`
+    .snack-bar-wr {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .snack-text {
+      color: white;
+    }
+        
+    .snack-bar-btn {
+      margin-left: 7px;
+      color: white;
+      cursor: pointer;
+    }
+  `],
+})
+export class CopySnackBarComponent {
+
+  constructor(
+    private snackBar: MatSnackBar,
+    @Inject(MAT_SNACK_BAR_DATA) public data: any
+  ) { }
+
+  onClick() {
+    this.snackBar.dismiss();
+  }
+  
 }

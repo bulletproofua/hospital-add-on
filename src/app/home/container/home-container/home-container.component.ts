@@ -1,22 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as dataStore from "../../../store/data/reducers"
+import * as fromHome from "../../store/reducers";
+import * as fromHomeActions from "../../store/actions/home.action";
 
 @Component({
   selector: 'app-home-container',
   templateUrl: './home-container.component.html',
   styleUrls: ['./home-container.component.scss']
 })
-export class HomeContainerComponent implements OnInit {
+export class HomeContainerComponent {
 
-  constructor(private store: Store<any>) { }
-
-  ngOnInit(): void {
-  }
-
-  applyFilter(event) {
-
+  constructor(private store: Store<any>) {
+    this.store.dispatch(fromHomeActions.getData());
   }
 
 }

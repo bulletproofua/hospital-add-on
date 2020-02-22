@@ -23,5 +23,13 @@ export interface SubGroupElement {
 export interface GetDataError {
     title: string;
     code: string;
-    decription: string;
+    description: string;
 }
+
+export interface SelectionGroup {
+    id: string;
+    title: string;
+    selected: boolean;
+}
+
+

@@ -6,20 +6,22 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 
 import { Action } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as dataActions from "../actions/data.action";
+import * as dataActions from "../actions/home.action";
 
-import { DataService } from '../services/data.service';
+import { DataService } from '../../../services/data.service';
+
+import { Group, StoreData } from 'src/app/models/store-data.model';
  
 @Injectable()
-export class DataEffects {
+export class HomeEffects {
  
   getData$: Observable<Action> = createEffect(() => this.actions$.pipe(
     ofType(dataActions.getData),
-    switchMap(() => this.datraService.getDataFromFile()
+    switchMap(() => this.dataService.getDataFromFile()
       .pipe(
-        map((storeData: any) => {
+        map((storeData: StoreData) => {
             console.log("storeData req", storeData)
-            return dataActions.getDataSuccess({ data: storeData })
+            return dataActions.getDataSuccess({ groups: storeData.group })
         }),
         catchError((error: HttpErrorResponse) => {
             console.log("err", error)
@@ -31,6 +33,6 @@ export class DataEffects {
  
   constructor(
     private actions$: Actions,
-    private datraService: DataService
+    private dataService: DataService
   ) {}
 }
