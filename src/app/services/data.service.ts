@@ -11,6 +11,6 @@ export class DataService {
     constructor (private http: HttpClient) {}
 
     getDataFromFile(): Observable<StoreData | HttpErrorResponse> {
-        return this.http.get<StoreData | HttpErrorResponse>('assets/data/UDRG_TRA-v-3.0.json');
+        return this.http.get<StoreData | HttpErrorResponse>('assets/UDRG_TRA-v-3.0.json');
     }
 }

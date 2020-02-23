@@ -52,7 +52,7 @@ export const getSelectedGroups = createSelector(
 export const getDataFilteredByGroups = createSelector(
     getData,
     getSelectedGroups,
-    (data, getSelectedGroups: any) => data.filter((group: Group) => getSelectedGroups.some(selectedGroup => selectedGroup.id === group.id))
+    (data, getSelectedGroups: any) => data ? data.filter((group: Group) => getSelectedGroups.some(selectedGroup => selectedGroup.id === group.id)) : data
 )
 
 export const getDataFilteredByTextField = createSelector(
