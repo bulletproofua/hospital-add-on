@@ -1,0 +1,22 @@
+<div class="container" *ngIf="data$ | async; else error">
+    <mat-card class="card">
+        <div>
+            <mat-card-content>
+                <app-filter></app-filter>
+                <app-group-filter></app-group-filter>
+            </mat-card-content>
+        </div>
+        <div class="content">
+            <app-list></app-list>
+        </div>
+    </mat-card>
+</div>
+
+<ng-template #error>
+    <div *ngIf="error$ | async as err" class="error">
+        <div><strong>Сталася помилка!</strong></div>
+        <div>{{err.message}}</div>
+        <div *ngIf="err?.error?.error?.message">{{err.error.error.message}}</div>
+    </div>
+</ng-template>
+

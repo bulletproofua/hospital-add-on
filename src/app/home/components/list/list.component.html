@@ -1,0 +1,45 @@
+<ng-container *ngIf="(tableData$ | async).length; else emptyList">
+    <table mat-table [dataSource]="tableData$ | async">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element" (click)="copyContent(element.id)"> {{element.id}} </td>
+        </ng-container>
+    
+        <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>Title</th>
+            <td mat-cell *matCellDef="let element" (click)="copyContent(element.title)"> {{element.title}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element" (click)="copyContent(element.value)"> {{element.value}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    
+        <!-- Group header -->
+        <ng-container matColumnDef="groupHeader">
+            <td colspan="777" mat-cell *matCellDef="let groupBy" style="background: rgb(248, 248, 248);" ><strong>{{ groupBy.groupTitle }}</strong></td>
+        </ng-container>
+    
+        <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"> </tr>
+    
+        <!-- SubGroup header -->
+        <ng-container matColumnDef="subGroup">
+            <td colspan="999" mat-cell *matCellDef="let subGroup" style="background: rgb(251, 251, 251);"><strong style="color: gray; margin-left: 7px;">{{ subGroup.subgroupTitle }}</strong></td>
+        </ng-container>
+    
+        <tr mat-row *matRowDef="let row; columns: ['subGroup']; when: isSubgroup"> </tr>
+    
+    </table>
+</ng-container>
+
+<ng-template #emptyList>
+    <div class="empty-list">
+        <strong>Список пустий!</strong>
+    </div>
+</ng-template>
+
+
