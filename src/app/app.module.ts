@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 
 // Modules
 import { MaterialModule } from './modules/material.module';
+import { AngularFireModule } from '@angular/fire';
 
 // Store
 import { reducers, metaReducers } from './store/reducers';
@@ -43,7 +44,8 @@ import { DataService } from './services/data.service';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
-    })
+    }),
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

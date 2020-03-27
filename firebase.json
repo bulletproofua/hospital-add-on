@@ -1,5 +1,18 @@
 {
   "hosting": {
+    "headers": [ {
+      "source": "**/*.@(json)",
+      "headers": [ {
+        "key": "Access-Control-Allow-Origin",
+        "value": "*"
+      } ]
+    },{
+      "source": "**/*.@(jpg|jpeg|gif|png)",
+      "headers": [ {
+        "key": "Access-Control-Allow-Origin",
+        "value": "*"
+      } ]
+    }],
     "public": "public",
     "ignore": [
       "firebase.json",
@@ -12,5 +25,8 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

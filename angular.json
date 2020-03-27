@@ -102,6 +102,10 @@
           "options": {
             "browserTarget": "hospital-add-on:build"
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }
