@@ -686,7 +686,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   /***/
   function _(module, exports, __webpack_require__) {
     module.exports = __webpack_require__(
-    /*! /Users/user1/Git/hospitall-add-on/src/main.ts */
+    /*! D:\hospital-add-on\src\main.ts */
     "./src/main.ts");
     /***/
   }
