@@ -19,11 +19,3 @@ export interface SubGroupElement {
     title: string;
     value: string;
 } 
-
-export interface SelectionGroup {
-    id: string;
-    title: string;
-    selected: boolean;
-}
-
-

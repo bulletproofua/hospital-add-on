@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, AfterViewInit } from '@angular/core';
 import { Clipboard } from "@angular/cdk/clipboard"
 
 import { MatSnackBar, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
@@ -14,12 +14,15 @@ import * as fromHome from "../../store/reducers"
 export class ListComponent {
 
   tableData$ = this.store.select(fromHome.getDataForTable);
+  groups$ = this.store.select(fromHome.getGroups);
+  selectedGroupId$ = this.store.select(fromHome.getSelectedGroupId); 
+
   displayedColumns: string[] = ['id', 'title'];
 
   constructor(
     private store: Store<any>,
     private clipboard: Clipboard,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
   ) { }
 
   isGroup(index, item): boolean{

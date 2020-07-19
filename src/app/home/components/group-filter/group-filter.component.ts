@@ -8,13 +8,13 @@ import * as fromHomeActions from "../../store/actions/home.action";
 @Component({
   selector: 'app-group-filter',
   template: `
-    <mat-chip-list multiple [selectable]="true">
+    <mat-chip-list selectable>
       <mat-chip 
-        *ngFor="let group of selectedGroups$ | async"
+        *ngFor="let item of groups$ | async"
         selectable="true"
-        [selected]="group.selected"
-        (click)="toggleGroup(group)"
-      > {{ group.title}} </mat-chip>
+        [selected]="item.id === (selectedGroupId$ | async)"
+        (click)="toggleGroup(item)"
+      > {{ item.title}} </mat-chip>
     </mat-chip-list>
   `,
   styles: [`
@@ -25,12 +25,13 @@ import * as fromHomeActions from "../../store/actions/home.action";
 })
 export class GroupFilterComponent {
 
-  selectedGroups$ = this.store.select(fromHome.getSelectionGroups); 
+  groups$ = this.store.select(fromHome.getGroups); 
+  selectedGroupId$ = this.store.select(fromHome.getSelectedGroupId); 
 
   constructor(private store: Store<any>) { }
 
   toggleGroup(event) {
-    this.store.dispatch(fromHomeActions.toggleGroup({ group: event }));
+    this.store.dispatch(fromHomeActions.toggleGroup({ groupId: event.id }));
   }
 
 }

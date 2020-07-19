@@ -21,38 +21,33 @@ export const getHomeState = createSelector(
 
 export const getError = createSelector(
     getHomeState,
-    data => fromHome.getError(data)
+    fromHome.getError
 )
 
 export const getData = createSelector(
     getHomeState,
-    data => fromHome.getData(data)
+    fromHome.getData
 )
 
 export const getGroups = createSelector(
     getHomeState,
-    data => fromHome.getGroups(data)
+    fromHome.getGroups
 )
 
 export const getFilter = createSelector(
     getHomeState,
-    data => fromHome.getFilter(data)
+    fromHome.getFilter
 )
 
-export const getSelectionGroups = createSelector(
+export const getSelectedGroupId = createSelector(
     getHomeState,
-    data => fromHome.getSelectedGroups(data)
-)
-
-export const getSelectedGroups = createSelector(
-    getSelectionGroups,
-    data => data.filter(d => d.selected)
+    fromHome.getSelectedGroupId,
 )
 
 export const getDataFilteredByGroups = createSelector(
     getData,
-    getSelectedGroups,
-    (data, getSelectedGroups: any) => data ? data.filter((group: Group) => getSelectedGroups.some(selectedGroup => selectedGroup.id === group.id)) : data
+    getSelectedGroupId,
+    (data, selectedGroupId: any) => data && selectedGroupId !== "all" ? data.filter((group: Group) => group.id === selectedGroupId) : data
 )
 
 export const getDataFilteredByTextField = createSelector(
@@ -80,6 +75,7 @@ export const getDataForTable = createSelector(
             
             data.forEach(group => {
                 tableArr.push({
+                    id: group.id,
                     groupTitle: group.title,
                     isGroup: true
                 })

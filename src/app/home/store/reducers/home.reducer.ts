@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as homeAction from '../actions/home.action';
 
-import { Group, SelectionGroup } from '../../../models/store-data.model';
+import { Group } from '../../../models/store-data.model';
 
 export const HOME_FEATURE_KEY = "home";
 
@@ -10,7 +10,7 @@ export interface HomeState {
     groups: any[];
     error: any;
     filter: string;
-    selectedGroups: SelectionGroup[];
+    selectedGroupId: string;
 }
 
 export const initialState: HomeState = {
@@ -18,26 +18,31 @@ export const initialState: HomeState = {
     groups: [],
     error: null,
     filter: '',
-    selectedGroups: []
+    selectedGroupId: null,
 };
 
 const dataReducer = createReducer(
     initialState,
-    on(homeAction.getData, state => initialState),
-    on(homeAction.getDataSuccess, (state, { groups, type }) => ({
+    on(homeAction.getData, () => initialState),
+
+    on(homeAction.getDataSuccess, (state, { groups }) => ({
         ...state,
         data: groups,
-        groups: groups.map(g => ({ id: g.id, title: g.title })),
+        groups: [...groups, { id: "all", title: "УСІ", }],
         error: null,
-        selectedGroups: groups.map(group => ({ id: group.id, title: group.title, selected: true }))
+        selectedGroupId: groups[0].id
     })),
-    on(homeAction.getDataFailure, (state, { error }) => ({ ...state, data: undefined, error: error })),
-    on(homeAction.toggleGroup, (state, { group }) => {
-        const SG = JSON.parse(JSON.stringify(state.selectedGroups));
-        let el = SG[SG.findIndex(g => g.id === group.id)]       
-        el.selected = !el.selected;
-        return { ...state, selectedGroups: SG }
-    }),
+
+    on(homeAction.getDataFailure, (state, { error }) => ({ 
+        ...state, 
+        data: undefined, error: error 
+    })),
+
+    on(homeAction.toggleGroup, (state, { groupId }) => ({
+        ...state,
+        selectedGroupId: groupId,
+    })),
+
     on(homeAction.setTextFilter, (state, { text }) => ({ ...state, filter: text })),
 );
   
@@ -49,4 +54,4 @@ export const getData = (state) => state.data;
 export const getGroups = (state) => state.groups;
 export const getError = (state) => state.error;
 export const getFilter = (state) => state.filter;
-export const getSelectedGroups = (state) => state.selectedGroups;
+export const getSelectedGroupId = (state) => state.selectedGroupId;

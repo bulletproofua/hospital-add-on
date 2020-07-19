@@ -19,7 +19,7 @@ export const getDataFailure = createAction(
 
 export const toggleGroup = createAction(
     "[Home] Toggle Group",
-    props<{ group: any }>()
+    props<{ groupId: any }>()
 );
 
 export const setTextFilter = createAction(
